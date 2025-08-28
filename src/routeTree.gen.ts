@@ -12,12 +12,19 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index/route'
+import { Route as IndexLmsScreenImport } from './routes/index/LmsScreen'
 
 // Create/Update Routes
 
 const IndexRouteRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const IndexLmsScreenRoute = IndexLmsScreenImport.update({
+  id: '/index/LmsScreen',
+  path: '/index/LmsScreen',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -32,6 +39,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRoute
     }
+    '/index/LmsScreen': {
+      id: '/index/LmsScreen'
+      path: '/index/LmsScreen'
+      fullPath: '/index/LmsScreen'
+      preLoaderRoute: typeof IndexLmsScreenImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRouteRoute
+  '/index/LmsScreen': typeof IndexLmsScreenRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRouteRoute
+  '/index/LmsScreen': typeof IndexLmsScreenRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRouteRoute
+  '/index/LmsScreen': typeof IndexLmsScreenRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/index/LmsScreen'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/index/LmsScreen'
+  id: '__root__' | '/' | '/index/LmsScreen'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRouteRoute: typeof IndexRouteRoute
+  IndexLmsScreenRoute: typeof IndexLmsScreenRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRouteRoute: IndexRouteRoute,
+  IndexLmsScreenRoute: IndexLmsScreenRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +96,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/index/LmsScreen"
       ]
     },
     "/": {
       "filePath": "index/route.tsx"
+    },
+    "/index/LmsScreen": {
+      "filePath": "index/LmsScreen.tsx"
     }
   }
 }
