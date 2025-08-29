@@ -8,34 +8,65 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteRouteImport } from './routes/index/route'
-import { Route as IndexLmsScreenRouteImport } from './routes/index/LmsScreen'
+// Import Routes
 
-const IndexRouteRoute = IndexRouteRouteImport.update({
+import { Route as rootRoute } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index/route'
+import { Route as IndexLmsScreenImport } from './routes/index/LmsScreen'
+
+// Create/Update Routes
+
+const IndexRouteRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => rootRoute,
 } as any)
-const IndexLmsScreenRoute = IndexLmsScreenRouteImport.update({
+
+const IndexLmsScreenRoute = IndexLmsScreenImport.update({
   id: '/index/LmsScreen',
   path: '/index/LmsScreen',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => rootRoute,
 } as any)
+
+// Populate the FileRoutesByPath interface
+
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/index/LmsScreen': {
+      id: '/index/LmsScreen'
+      path: '/index/LmsScreen'
+      fullPath: '/index/LmsScreen'
+      preLoaderRoute: typeof IndexLmsScreenImport
+      parentRoute: typeof rootRoute
+    }
+  }
+}
+
+// Create and export the route tree
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRouteRoute
   '/index/LmsScreen': typeof IndexLmsScreenRoute
 }
+
 export interface FileRoutesByTo {
   '/': typeof IndexRouteRoute
   '/index/LmsScreen': typeof IndexLmsScreenRoute
 }
+
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
+  __root__: typeof rootRoute
   '/': typeof IndexRouteRoute
   '/index/LmsScreen': typeof IndexLmsScreenRoute
 }
+
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/' | '/index/LmsScreen'
@@ -44,34 +75,37 @@ export interface FileRouteTypes {
   id: '__root__' | '/' | '/index/LmsScreen'
   fileRoutesById: FileRoutesById
 }
+
 export interface RootRouteChildren {
   IndexRouteRoute: typeof IndexRouteRoute
   IndexLmsScreenRoute: typeof IndexLmsScreenRoute
-}
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/index/LmsScreen': {
-      id: '/index/LmsScreen'
-      path: '/index/LmsScreen'
-      fullPath: '/index/LmsScreen'
-      preLoaderRoute: typeof IndexLmsScreenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRouteRoute: IndexRouteRoute,
   IndexLmsScreenRoute: IndexLmsScreenRoute,
 }
-export const routeTree = rootRouteImport
+
+export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+/* ROUTE_MANIFEST_START
+{
+  "routes": {
+    "__root__": {
+      "filePath": "__root.tsx",
+      "children": [
+        "/",
+        "/index/LmsScreen"
+      ]
+    },
+    "/": {
+      "filePath": "index/route.tsx"
+    },
+    "/index/LmsScreen": {
+      "filePath": "index/LmsScreen.tsx"
+    }
+  }
+}
+ROUTE_MANIFEST_END */

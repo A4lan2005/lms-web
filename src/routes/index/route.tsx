@@ -113,10 +113,9 @@ export default function searchScreen() {
           </div>
         </div>
       </div>
-
       {/* Main Content */}
       <div className="flex min-h-screen flex-col">
-        <div className="flex items-center justify-between p-4">
+        <div className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between bg-[#F5F8FF]/70 backdrop-blur-md">
           <button className="relative z-30 p-2" onClick={toggleMenu}>
             <img src={Menu} alt="menu" className="h-15 w-15" />
           </button>
@@ -131,15 +130,17 @@ export default function searchScreen() {
         </div>
 
         {/* Main Content Area */}
-        <div className="mx-auto mt-10 max-w-md flex-1 px-4 py-8">
+        <div className="mx-auto mt-[100px] max-w-md flex-1 px-4 py-8">
           <h1 className="mb-8 text-center text-8xl text-[#0A2260]">
             Dana Tiin
           </h1>
 
-          <SearchBar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          />
+          <div className="mt-[-43px]">
+            <SearchBar
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
+          </div>
 
           <UserCards userCards={userCards} />
         </div>
