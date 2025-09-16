@@ -13,10 +13,10 @@ import location from '@/src/assests/Location.svg';
 import chat from '@/src/assests/Message.svg';
 
 export const Route = createFileRoute('/')({
-  component: searchScreen,
+  component: SearchScreen,
 });
 
-export default function searchScreen() {
+export default function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isEmailOpen, setIsEmailOpen] = useState(false);
