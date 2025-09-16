@@ -42,12 +42,12 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/components/**/*'],
+    files: ['**/*'],
     plugins: {
       unicorn: pluginUnicorn,
     },
     rules: {
-      'unicorn/filename-case': ['error', { case: 'pascalCase' }],
+      'unicorn/filename-case': ['error', { case: 'snake_case' }],
     },
   },
   configPrettier,
